@@ -1,0 +1,50 @@
+<html>
+<head>
+	<script>
+function httpGetAsync(theUrl, callback)
+{
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.onreadystatechange = function() { 
+        if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+            callback(xmlHttp.responseText);
+    }
+    xmlHttp.open("GET", theUrl, true); // true for asynchronous 
+    xmlHttp.send(null);
+}
+
+function mostra(response){
+	//document.write(response);
+	const tabella=JSON.parse(response);
+	var arrayLength = tabella.length;
+	document.write("<table border=1>");
+	for (var i = 0; i < arrayLength; i++) {
+		document.write("<tr>");
+			for (const key in tabella[i]) {
+    			if (tabella[i].hasOwnProperty(key)) {
+    				document.write("<td>");
+					document.write(tabella[i][key]);
+        			//console.log(`${key}: ${user[key]}`);
+        			document.write("</td>");
+    			}
+			}
+
+		document.write("</tr>");
+
+
+
+    	document.write("<tr><td>"+tabella[i].table_name+"</td></tr>");
+	}
+	document.write("</table>");
+}
+	</script>
+
+
+</head>
+
+<body>
+<script>
+	httpGetAsync("http://127.0.0.1/utentejson/dati.php",mostra)
+
+</script>
+</body>
+</html>
